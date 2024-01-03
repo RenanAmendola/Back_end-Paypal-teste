@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project_paypal.project.model.User;
 import com.project_paypal.project.model.UserLogin;
+import com.project_paypal.project.model.product;
 import com.project_paypal.project.repository.UserRepository;
 import com.project_paypal.project.service.UserService;
 
@@ -61,6 +62,7 @@ public class UserController {
 				.map(resp -> ResponseEntity.status(HttpStatus.CREATED).body(resp))
 				.orElse(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
 	}
+	
 		
 	@PutMapping("/Update")
 	public ResponseEntity<User> putUsuario(@Valid @RequestBody User user){

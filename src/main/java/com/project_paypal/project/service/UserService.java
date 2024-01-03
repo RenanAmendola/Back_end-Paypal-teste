@@ -27,22 +27,34 @@ public class UserService {
 		return Optional.of(UsuRe.save(user));										
 	}
 	
-	public Optional<User> updateUser(User user){
-		
-		if(UsuRe.findById(user.getId()).isPresent()) {
-			Optional<User> buscaUser = UsuRe.
-					findByEmail(user.getEmail());
-			if (buscaUser.isPresent()) {
-				if(buscaUser.get().getId() !=user.getId())
-					throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The user already exists", null);
-			}
-			
-			return Optional.of(UsuRe.save(user));
-		}
-		
-		throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", null);
-		
-	}
+	public Optional<User> updateUser(User updatedUserData) {
+        // Verifica se o usuário existe pelo ID
+        Optional<User> existingUserOptional = UsuRe.findById(updatedUserData.getId());
+
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+
+            // Verifica se o email atualizado já existe para outro usuário
+            Optional<User> existingUserByEmail = UsuRe.findByEmail(updatedUserData.getEmail());
+            if (existingUserByEmail.isPresent() && !existingUserByEmail.get().getId().equals(existingUser.getId())) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "The email is already in use", null);
+            }
+
+            // Atualiza apenas os campos do usuário, mantendo a coleção adress inalterada
+            existingUser.setName(updatedUserData.getName());
+            existingUser.setLast_name(updatedUserData.getLast_name());
+            existingUser.setEmail(updatedUserData.getEmail());
+            existingUser.setPhone(updatedUserData.getPhone());
+            existingUser.setPassword(updatedUserData.getPassword());
+
+            // Salva o usuário atualizado
+            User updatedUser = UsuRe.save(existingUser);
+            return Optional.of(updatedUser);
+        } else {
+            // Usuário não encontrado
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found", null);
+        }
+    }
 	
 	public Optional<UserLogin> log_inUser(Optional<UserLogin> UserLogin) {
 		
