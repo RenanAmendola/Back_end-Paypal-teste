@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.project_paypal.project.model.User;
 import com.project_paypal.project.model.UserLogin;
-import com.project_paypal.project.model.product;
 import com.project_paypal.project.repository.UserRepository;
 import com.project_paypal.project.service.UserService;
 
