@@ -28,6 +28,14 @@ public class product {
     private String description;
 
     @NotNull
+    @Size(min = 3)
+    private String tipo;
+
+    @NotNull
+    @Size(min = 3)
+    private String imagem;
+
+    @NotNull
     @Digits(integer = 8, fraction = 2) 
     private BigDecimal price;
 
@@ -70,5 +78,23 @@ public class product {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
+
+    
 
 }
